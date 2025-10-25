@@ -17,6 +17,13 @@
 
     <dependencies>
         <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-web-api</artifactId>
+            <version>9.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>jakarta.enterprise</groupId>
             <artifactId>jakarta.enterprise.cdi-api</artifactId>
             <version>4.0.1</version>
@@ -38,5 +45,9 @@
         </dependency>
 
     </dependencies>
+
+    <build>
+        <finalName>ROOT</finalName>
+    </build>
 
 </project>
