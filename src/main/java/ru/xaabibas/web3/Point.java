@@ -3,14 +3,20 @@ package ru.xaabibas.web3;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 
+import java.io.Serializable;
+
 @Named
 @RequestScoped
-public class Point {
-    private double x = 1;
-    private double y = 1;
-    private double r = 1;
+public class Point implements Serializable {
+    private final double x;
+    private final double y;
+    private final double r;
+    private boolean result;
 
-    public Point() {
+    public Point(double x, double y, double r) {
+        this.x = x;
+        this.y = y;
+        this.r = r;
     }
 
     public double getX() {
@@ -23,17 +29,5 @@ public class Point {
 
     public double getR() {
         return r;
-    }
-
-    public void setX(double x) {
-        this.x = x;
-    }
-
-    public void setY(double y) {
-        this.y = y;
-    }
-
-    public void setR(double r) {
-        this.r = r;
     }
 }
