@@ -2,19 +2,39 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui"
       lang="ru">
-<head>
+<h:head>
     <title>Jakarta Server Facepalm</title>
-</head>
-
-<body>
+</h:head>
+<h:body>
     <p>
         Main
     </p>
     <p>
         form <!-- TODO: components to insert data -->
     </p>
+    <h:form>
+        <h:panelGrid columns="3" style="margin-bottom: 10px" >
+            <h:outputText value="Выбранное значение параметра X: " />
+            <p:inputText id="x" />
+            <p:slider for="x" type="vertical" minValue="-2.0" maxValue="2.0" step="0.5" />
+        </h:panelGrid>
+
+        <h:panelGrid columns="3" style="margin-bottom: 10px" >
+            <h:outputText value="Выбранное значение параметра Y: " />
+            <h:inputText />
+        </h:panelGrid>
+
+        <h:panelGrid columns="3" style="margin-bottom: 10px" >
+            <h:outputText value="Выбранное значение параметра R: " />
+            <p:inputText id="r" />
+            <p:slider for="r" type="vertical" minValue="-2.0" maxValue="5.0" step="0.1" />
+        </h:panelGrid>
+
+    </h:form>
     <p>
         image <!-- TODO: interactive image -->
     </p>
@@ -22,5 +42,5 @@
         table <!-- TODO: list of previous attempts -->
     </p>
     <h:link value="Index" outcome="goToIndex" id="go-to-index-button"/>
-</body>
+</h:body>
 </html>
