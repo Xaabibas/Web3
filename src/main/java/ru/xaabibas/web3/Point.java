@@ -6,14 +6,12 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
-import java.util.logging.Logger;
 
 @Named
 @Getter
 @Setter
 @ToString
 public class Point implements Serializable {
-    private static Logger logger = Logger.getLogger(Point.class.getName());
     private double x;
     private double y;
     private double r;

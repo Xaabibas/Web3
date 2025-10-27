@@ -20,33 +20,41 @@
     <h:form>
         <h:panelGrid columns="3" style="margin-bottom: 10px" >
             <h:outputText value="Выбранное значение параметра X: " />
-            <p:inputNumber id="x" value="#{attempt.point.x}">
-                <f:validateDoubleRange minimum="-2" maximum="2"/>
-            </p:inputNumber>
+            <p:inputNumber id="x" value="#{attempt.point.x}"
+                           required="true"
+                           readonly="true" />
             <p:slider for="x" type="vertical" minValue="-2.0" maxValue="2.0" step="0.5"
                 styleClass="slider"/>
         </h:panelGrid>
 
         <h:panelGrid columns="3" style="margin-bottom: 10px" >
             <h:outputText value="Выбранное значение параметра Y: " />
-            <p:inputNumber value="#{attempt.point.y}">
+            <p:inputNumber value="#{attempt.point.y}"
+                           required="true"
+                           requiredMessage="Не введено значение поля Y"
+                           validatorMessage="Y должен быть числом от -5 до 5" >
                 <f:validateDoubleRange minimum="-5" maximum="5" />
             </p:inputNumber>
         </h:panelGrid>
 
         <h:panelGrid columns="3" style="margin-bottom: 10px" >
             <h:outputText value="Выбранное значение параметра R: " />
-            <p:inputNumber id="r" value="#{attempt.point.r}" >
-                <f:validateDoubleRange minimum="-2" maximum="5" />
-            </p:inputNumber>
+            <p:inputNumber id="r" value="#{attempt.point.r}"
+                           required="true"
+                           readonly="true" />
             <p:slider for="r" type="vertical" minValue="-2.0" maxValue="5.0" step="0.1"
                       styleClass="slider"/>
         </h:panelGrid>
+
         <p:commandButton value="Обновить" update="@form" action="#{keeper.add(attempt)}"/>
+        <p:growl showDetail="true"
+                 showSummary="false"
+                 life="5000"
+                 sticky="false"
+                 style="position: fixed; top: 20px; right: 20px; width: 300px;"
+                 autoUpdate="true"/>
 
     </h:form>
-
-    <h:outputText value="X = #{attempt.point.x}, Y = #{attempt.point.y}, R = #{attempt.point.r}"/>
 
     <p>
         image <!-- TODO: interactive image -->

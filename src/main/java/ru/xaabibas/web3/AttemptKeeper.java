@@ -12,7 +12,6 @@ public class AttemptKeeper {
     List<Attempt> attempts = new LinkedList<>();
 
     public void add(Attempt attempt) {
-        System.out.println(attempt.toString());
         attempts.add(attempt);
     }
 }
