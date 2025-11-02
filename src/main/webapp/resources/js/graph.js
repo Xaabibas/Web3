@@ -106,8 +106,4 @@ async function drawDefaultPoint() {
     drawPoint(x, y, result);
 }
 
-function clear() {
-    // TODO: clear points
-}
-
 window.drawAttempts = drawAttempts;

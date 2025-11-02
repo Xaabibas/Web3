@@ -51,11 +51,11 @@
 
                 <p:commandButton value="Обновить" update="table @form"
                                  action="#{keeper.add(attempt)}"
-                                 onclick="drawDefaultPoint()" />
+                                 onclick="drawDefaultPoint();" />
 
-                <p:commandButton value="Очистить" update="table @form"
+                <p:commandButton value="Очистить" update="table"
                                  action="#{keeper.clear()}"
-                                 onclick="clear();"/>
+                                 oncomplete="document.getElementById('graph').querySelectorAll('circle').forEach(c => c.remove());"/>
 
                 <p:growl showDetail="true"
                          showSummary="false"
