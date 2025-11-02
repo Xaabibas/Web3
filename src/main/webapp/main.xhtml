@@ -88,7 +88,7 @@
                 </h:outputText>
             </p:column>
 
-            <p:column headerText="Work Time">
+            <p:column headerText="Work Time, mcs">
                 <h:outputText value="#{element.workTime}" >
                     <f:convertNumber type="number" />
                 </h:outputText>
@@ -99,10 +99,6 @@
     </h:form>
     <p>
         image <!-- TODO: interactive image -->
-    </p>
-
-    <p>
-        table <!-- TODO: list of previous attempts -->
     </p>
     <h:link value="Index" outcome="goToIndex" id="go-to-index-button"/>
 </h:body>

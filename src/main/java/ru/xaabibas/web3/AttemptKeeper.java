@@ -14,6 +14,7 @@ public class AttemptKeeper {
     private List<Attempt> attempts = new LinkedList<>();
 
     public void add(Attempt attempt) {
+        attempt.submit();
         attempts.add(attempt);
     }
 }
