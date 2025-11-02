@@ -3,7 +3,6 @@ let pt = svg.createSVGPoint();
 const centerX = 250;
 const centerY = 250;
 const gap = 40;
-let currentR = 0;
 
 function drawGraph(event, ui) {
     const newR = ui.value;
@@ -87,3 +86,28 @@ svg.onclick = async function clickedPoint(e) {
     const result = response.jqXHR.pfArgs.result;
     drawPoint(lastX, lastY, result);
 }
+
+function drawAttempts(attempts) {
+    for (let i = 0; i < attempts.length; i++) {
+        const x = attempts[i].point.x;
+        const y = attempts[i].point.y;
+        const result = attempts[i].result;
+
+        drawPoint(x, y, result);
+    }
+}
+
+async function drawDefaultPoint() {
+    const response = await update();
+    const x = response.jqXHR.pfArgs.x;
+    const y = response.jqXHR.pfArgs.y;
+    const result = response.jqXHR.pfArgs.result;
+    console.log(x, y, result);
+    drawPoint(x, y, result);
+}
+
+function clear() {
+    // TODO: clear points
+}
+
+window.drawAttempts = drawAttempts;

@@ -1,5 +1,6 @@
 package ru.xaabibas.web3;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 import lombok.Getter;
@@ -20,10 +21,13 @@ import java.time.format.DateTimeFormatter;
 @NoArgsConstructor
 @RequestScoped
 public class Attempt implements Serializable {
+    @JsonIgnore
     private Checker checker = new Checker();
     private Point point = new Point();
     private boolean result;
+    @JsonIgnore
     private String start;
+    @JsonIgnore
     private long workTime;
 
     public void submit() {
@@ -54,5 +58,12 @@ public class Attempt implements Serializable {
 
     public void getR() {
         PrimeFaces.current().ajax().addCallbackParam("r", this.point.getR());
+    }
+
+    public void update() {
+        submit();
+        PrimeFaces.current().ajax().addCallbackParam("x", this.point.getX());
+        PrimeFaces.current().ajax().addCallbackParam("y", this.point.getY());
+        PrimeFaces.current().ajax().addCallbackParam("result", this.result);
     }
 }

@@ -49,9 +49,13 @@
                     <h:inputHidden id="hiddenR" value="#{attempt.point.r}" />
                 </h:panelGrid>
 
-                <p:commandButton value="Обновить" update="table @form" action="#{keeper.add(attempt)}" />
+                <p:commandButton value="Обновить" update="table @form"
+                                 action="#{keeper.add(attempt)}"
+                                 onclick="drawDefaultPoint()" />
 
-                <p:commandButton value="Очистить" update="table @form" action="#{keeper.clear()}" />
+                <p:commandButton value="Очистить" update="table @form"
+                                 action="#{keeper.clear()}"
+                                 onclick="clear();"/>
 
                 <p:growl showDetail="true"
                          showSummary="false"
@@ -178,8 +182,11 @@
             <h:link value="Index" outcome="goToIndex" id="go-to-index-button"/>
         </footer>
     </h:body>
-
+    <h:outputScript>
+        drawAttempts(JSON.parse('#{keeper.jsonToDraw()}'));
+    </h:outputScript>
     <p:remoteCommand name="addPoint" action="#{keeper.addFromJS}"
         update="table"/>
     <p:remoteCommand name="getR" action="#{attempt.getR}" />
+    <p:remoteCommand name="update" action="#{attempt.update}" />
 </html>

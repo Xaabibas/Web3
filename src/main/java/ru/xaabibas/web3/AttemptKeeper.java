@@ -1,5 +1,7 @@
 package ru.xaabibas.web3;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
@@ -13,6 +15,7 @@ import java.util.List;
 @ApplicationScoped
 @Getter
 public class AttemptKeeper {
+    private ObjectMapper mapper = new ObjectMapper();
     private List<Attempt> attempts = new LinkedList<>();
 
     public void add(Attempt attempt) {
@@ -40,5 +43,11 @@ public class AttemptKeeper {
         attempts.add(attempt);
 
         PrimeFaces.current().ajax().addCallbackParam("result", attempt.isResult());
+    }
+
+    public String jsonToDraw() throws JsonProcessingException {
+        return mapper.writeValueAsString(
+                attempts
+        );
     }
 }
