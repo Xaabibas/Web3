@@ -6,10 +6,10 @@ public class Checker {
         double y = point.getY();
         double r = point.getR();
 
-        return checkBox(x, y, r);
+        return r >= 0 ? checkBoxWithPositiveR(x, y, r) : checkBoxWithNegativeR(x, y, r);
     }
 
-    public boolean checkBox(double x, double y, double r) {
+    public boolean checkBoxWithPositiveR(double x, double y, double r) {
         if (x >= 0 && y >= 0) {
             return x*x + y*y <= r*r;
         }
@@ -18,6 +18,19 @@ public class Checker {
         }
         if (x < 0 && y <= 0) {
             return x >= -r && y >= -r;
+        }
+        return false;
+    }
+
+    public boolean checkBoxWithNegativeR(double x, double y, double r) {
+        if (x <= 0 && y <= 0) {
+            return x*x + y*y <= r*r;
+        }
+        if (x <= 0 && y > 0) {
+            return y <= 2 * x - r;
+        }
+        if (x > 0 && y >= 0) {
+            return x <= -r && y <= -r;
         }
         return false;
     }

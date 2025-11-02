@@ -8,7 +8,6 @@ import lombok.ToString;
 import java.io.Serializable;
 
 @Named
-@Getter
 @Setter
 @ToString
 public class Point implements Serializable {
@@ -24,5 +23,17 @@ public class Point implements Serializable {
         this.x = x;
         this.y = y;
         this.r = r;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public double getR() {
+        return r;
     }
 }
