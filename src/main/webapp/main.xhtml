@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="jakarta.faces.html"
       xmlns:f="jakarta.faces.core"
@@ -10,21 +9,21 @@
     <title>Jakarta Server Facepalm</title>
     <h:outputStylesheet name="slider.css" library="css" />
 </h:head>
+
 <h:body>
     <p>
         Main
     </p>
-    <p>
-        form <!-- TODO: components to insert data -->
-    </p>
     <h:form>
         <h:panelGrid columns="3" style="margin-bottom: 10px" >
-            <h:outputText value="Выбранное значение параметра X: " />
-            <p:inputNumber id="x" value="#{attempt.point.x}"
-                           required="true"
-                           readonly="true" />
-            <p:slider for="x" type="vertical" minValue="-2.0" maxValue="2.0" step="0.5"
-                styleClass="slider"/>
+            <h:outputText value="Выбранное значение параметра X: " style="padding-right: 15px;" />
+            <h:outputText id="xDisplay" value="#{attempt.point.x}"
+                          style="display: inline-block; min-width: 40px;" >
+                <f:convertNumber minFractionDigits = "2" />
+            </h:outputText>
+            <p:slider for="hiddenX" display="xDisplay" type="vertical" minValue="-2.0" maxValue="2.0" step="0.5"
+                      styleClass="slider"/>
+            <h:inputHidden id="hiddenX" value="#{attempt.point.x}" />
         </h:panelGrid>
 
         <h:panelGrid columns="3" style="margin-bottom: 10px" >
@@ -38,15 +37,18 @@
         </h:panelGrid>
 
         <h:panelGrid columns="3" style="margin-bottom: 10px" >
-            <h:outputText value="Выбранное значение параметра R: " />
-            <p:inputNumber id="r" value="#{attempt.point.r}"
-                           required="true"
-                           readonly="true" />
-            <p:slider for="r" type="vertical" minValue="-2.0" maxValue="5.0" step="0.1"
-                      styleClass="slider"/>
+            <h:outputText value="Выбранное значение параметра R: " style="padding-right: 15px;" />
+            <h:outputText id="rDisplay" value="#{attempt.point.r}"
+                          style="display: inline-block; min-width: 40px;">
+                <f:convertNumber minFractionDigits = "2" />
+            </h:outputText>
+            <p:slider for="hiddenR" display="rDisplay" type="vertical" minValue="-2.0" maxValue="5.0" step="0.1"
+                      styleClass="slider" />
+            <h:inputHidden id="hiddenR" value="#{attempt.point.r}" />
         </h:panelGrid>
 
         <p:commandButton value="Обновить" update="@form" action="#{keeper.add(attempt)}"/>
+
         <p:growl showDetail="true"
                  showSummary="false"
                  life="5000"
@@ -54,11 +56,51 @@
                  style="position: fixed; top: 20px; right: 20px; width: 300px;"
                  autoUpdate="true"/>
 
-    </h:form>
+        <p:dataTable value="#{keeper.attempts}" var="element">
 
+            <p:column headerText="X">
+                <h:outputText value="#{element.point.x}" >
+                    <f:convertNumber type="number" />
+                </h:outputText>
+            </p:column>
+
+            <p:column headerText="Y">
+                <h:outputText value="#{element.point.y}" >
+                    <f:convertNumber type="number" />
+                </h:outputText>
+            </p:column>
+
+            <p:column headerText="R">
+                <h:outputText value="#{element.point.r}" >
+                    <f:convertNumber type="number" />
+                </h:outputText>
+            </p:column>
+
+            <p:column headerText="Hit">
+                <h:outputText value="#{element.result}" >
+
+                </h:outputText>
+            </p:column>
+
+            <p:column headerText="Start">
+                <h:outputText value="#{element.start}" >
+
+                </h:outputText>
+            </p:column>
+
+            <p:column headerText="Work Time">
+                <h:outputText value="#{element.workTime}" >
+                    <f:convertNumber type="number" />
+                </h:outputText>
+            </p:column>
+
+        </p:dataTable>
+
+    </h:form>
     <p>
         image <!-- TODO: interactive image -->
     </p>
+
     <p>
         table <!-- TODO: list of previous attempts -->
     </p>
