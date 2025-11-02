@@ -19,6 +19,13 @@ footer a {
     background-color: transparent;
 }
 
+footer a:hover {
+    color: #28a745;
+    background-color: transparent;
+    border-color: transparent;
+    transform: translateY(1px);
+}
+
 footer a:active {
     color: #28a745;
     background-color: transparent;
