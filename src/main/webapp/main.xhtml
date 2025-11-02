@@ -62,7 +62,7 @@
                      style="position: fixed; top: 20px; right: 20px; width: 300px;"
                      autoUpdate="true"/>
 
-            <p:dataTable value="#{keeper.attempts}" var="element">
+            <p:dataTable id="table" value="#{keeper.attempts}" var="element">
 
                 <p:column headerText="X">
                     <h:outputText value="#{element.point.x}" >
@@ -183,4 +183,7 @@
             <h:link value="Index" outcome="goToIndex" id="go-to-index-button"/>
         </footer>
     </h:body>
+
+    <p:remoteCommand name="addPoint" action="#{keeper.addFromJS}" /> <!-- TODO: update table -->
+    <p:remoteCommand name="getR" action="#{attempt.getR}" />
 </html>

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.primefaces.PrimeFaces;
 
 
 import java.io.Serializable;
@@ -41,5 +42,17 @@ public class Attempt implements Serializable {
 
     private void check() {
         result = checker.check(point);
+    }
+
+    public boolean isResult() {
+        return result;
+    }
+
+    public void setPoint(Point point) {
+        this.point = point;
+    }
+
+    public void getR() {
+        PrimeFaces.current().ajax().addCallbackParam("r", this.point.getR());
     }
 }
