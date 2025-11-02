@@ -17,4 +17,8 @@ public class AttemptKeeper {
         attempt.submit();
         attempts.add(attempt);
     }
+
+    public void clear() {
+        attempts.clear();
+    }
 }

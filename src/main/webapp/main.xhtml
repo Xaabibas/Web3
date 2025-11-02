@@ -47,7 +47,9 @@
             <h:inputHidden id="hiddenR" value="#{attempt.point.r}" />
         </h:panelGrid>
 
-        <p:commandButton value="Обновить" update="@form" action="#{keeper.add(attempt)}"/>
+        <p:commandButton value="Обновить" update="@form" action="#{keeper.add(attempt)}" />
+
+        <p:commandButton value="Очистить" update="@form" action="#{keeper.clear()}" />
 
         <p:growl showDetail="true"
                  showSummary="false"
