@@ -11,6 +11,7 @@
         <title>Jakarta Server Facepalm</title>
         <h:outputScript library="js" name="clock.js" target="body"/>
         <h:outputStylesheet name="clock.css" library="css" />
+        <h:outputStylesheet name="footer.css" library="css" />
     </h:head>
 
     <h:body>
@@ -22,13 +23,14 @@
                 <h1>Хабиров Тимур Рустемович</h1>
                 <h2>P3232, Вариант 34657</h2>
             </header>
-            <h:link value="Main" outcome="goToMain" id="go-to-main-button"/>
         </h:panelGroup>
 
         <h:panelGroup styleClass="top-right-clock-container">
             <p id="clock" class="clock">
                 abstract clock </p>
         </h:panelGroup>
-
+        <footer>
+            <h:link value="Main" outcome="goToMain" id="go-to-main-button"/>
+        </footer>
     </h:body>
 </html>

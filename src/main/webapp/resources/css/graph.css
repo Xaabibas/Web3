@@ -1,0 +1,25 @@
+.axis {
+    stroke: white;
+}
+
+.figure {
+    stroke: white;
+    fill: deepskyblue;
+    fill-opacity: 0.8;
+}
+
+text {
+    fill: white;
+    font-size: 20px;
+}
+.hit {
+    stroke: limegreen;
+    fill: limegreen;
+    fill-opacity: 1;
+}
+
+.miss {
+    stroke: crimson;
+    fill: crimson;
+    fill-opacity: 1;
+}

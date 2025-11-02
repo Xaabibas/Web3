@@ -5,103 +5,133 @@
       xmlns:f="jakarta.faces.core"
       xmlns:p="http://primefaces.org/ui"
       lang="ru">
-<h:head>
-    <title>Jakarta Server Facepalm</title>
-    <h:outputStylesheet name="slider.css" library="css" />
-</h:head>
+    <h:head>
+        <title>Jakarta Server Facepalm</title>
+        <h:outputStylesheet name="slider.css" library="css" />
+        <h:outputStylesheet name="graph.css" library="css" />
+        <h:outputStylesheet name="footer.css" library="css" />
+    </h:head>
 
-<h:body>
-    <p>
-        Main
-    </p>
-    <h:form>
-        <h:panelGrid columns="3" style="margin-bottom: 10px" >
-            <h:outputText value="Выбранное значение параметра X: " style="padding-right: 15px;" />
-            <h:outputText id="xDisplay" value="#{attempt.point.x}"
-                          style="display: inline-block; min-width: 40px;" >
-                <f:convertNumber minFractionDigits = "2" />
-            </h:outputText>
-            <p:slider for="hiddenX" display="xDisplay" type="vertical" minValue="-2.0" maxValue="2.0" step="0.5"
-                      styleClass="slider"/>
-            <h:inputHidden id="hiddenX" value="#{attempt.point.x}" />
-        </h:panelGrid>
-
-        <h:panelGrid columns="3" style="margin-bottom: 10px" >
-            <h:outputText value="Выбранное значение параметра Y: " />
-            <p:inputNumber value="#{attempt.point.y}"
-                           required="true"
-                           requiredMessage="Не введено значение поля Y"
-                           validatorMessage="Y должен быть числом от -5 до 5" >
-                <f:validateDoubleRange minimum="-5" maximum="5" />
-            </p:inputNumber>
-        </h:panelGrid>
-
-        <h:panelGrid columns="3" style="margin-bottom: 10px" >
-            <h:outputText value="Выбранное значение параметра R: " style="padding-right: 15px;" />
-            <h:outputText id="rDisplay" value="#{attempt.point.r}"
-                          style="display: inline-block; min-width: 40px;">
-                <f:convertNumber minFractionDigits = "2" />
-            </h:outputText>
-            <p:slider for="hiddenR" display="rDisplay" type="vertical" minValue="-2.0" maxValue="5.0" step="0.1"
-                      styleClass="slider" />
-            <h:inputHidden id="hiddenR" value="#{attempt.point.r}" />
-        </h:panelGrid>
-
-        <p:commandButton value="Обновить" update="@form" action="#{keeper.add(attempt)}" />
-
-        <p:commandButton value="Очистить" update="@form" action="#{keeper.clear()}" />
-
-        <p:growl showDetail="true"
-                 showSummary="false"
-                 life="5000"
-                 sticky="false"
-                 style="position: fixed; top: 20px; right: 20px; width: 300px;"
-                 autoUpdate="true"/>
-
-        <p:dataTable value="#{keeper.attempts}" var="element">
-
-            <p:column headerText="X">
-                <h:outputText value="#{element.point.x}" >
-                    <f:convertNumber type="number" />
+    <h:body>
+        <p>
+            Main
+        </p>
+        <h:form>
+            <h:panelGrid columns="3" style="margin-bottom: 10px" >
+                <h:outputText value="Выбранное значение параметра X: " style="padding-right: 15px;" />
+                <h:outputText id="xDisplay" value="#{attempt.point.x}"
+                              style="display: inline-block; min-width: 40px;" >
+                    <f:convertNumber minFractionDigits = "2" />
                 </h:outputText>
-            </p:column>
+                <p:slider for="hiddenX" display="xDisplay" type="vertical" minValue="-2.0" maxValue="2.0" step="0.5"
+                          styleClass="slider"/>
+                <h:inputHidden id="hiddenX" value="#{attempt.point.x}" />
+            </h:panelGrid>
 
-            <p:column headerText="Y">
-                <h:outputText value="#{element.point.y}" >
-                    <f:convertNumber type="number" />
+            <h:panelGrid columns="3" style="margin-bottom: 10px" >
+                <h:outputText value="Выбранное значение параметра Y: " />
+                <p:inputNumber value="#{attempt.point.y}"
+                               required="true"
+                               requiredMessage="Не введено значение поля Y"
+                               validatorMessage="Y должен быть числом от -5 до 5" >
+                    <f:validateDoubleRange minimum="-5" maximum="5" />
+                </p:inputNumber>
+            </h:panelGrid>
+
+            <h:panelGrid columns="3" style="margin-bottom: 10px" >
+                <h:outputText value="Выбранное значение параметра R: " style="padding-right: 15px;" />
+                <h:outputText id="rDisplay" value="#{attempt.point.r}"
+                              style="display: inline-block; min-width: 40px;">
+                    <f:convertNumber minFractionDigits = "2" />
                 </h:outputText>
-            </p:column>
+                <p:slider for="hiddenR" display="rDisplay" type="vertical" minValue="-2.0" maxValue="5.0" step="0.1"
+                          styleClass="slider" />
+                <h:inputHidden id="hiddenR" value="#{attempt.point.r}" />
+            </h:panelGrid>
 
-            <p:column headerText="R">
-                <h:outputText value="#{element.point.r}" >
-                    <f:convertNumber type="number" />
-                </h:outputText>
-            </p:column>
+            <p:commandButton value="Обновить" update="@form" action="#{keeper.add(attempt)}" />
 
-            <p:column headerText="Hit">
-                <h:outputText value="#{element.result}" >
+            <p:commandButton value="Очистить" update="@form" action="#{keeper.clear()}" />
 
-                </h:outputText>
-            </p:column>
+            <p:growl showDetail="true"
+                     showSummary="false"
+                     life="5000"
+                     sticky="false"
+                     style="position: fixed; top: 20px; right: 20px; width: 300px;"
+                     autoUpdate="true"/>
 
-            <p:column headerText="Start">
-                <h:outputText value="#{element.start}" >
+            <p:dataTable value="#{keeper.attempts}" var="element">
 
-                </h:outputText>
-            </p:column>
+                <p:column headerText="X">
+                    <h:outputText value="#{element.point.x}" >
+                        <f:convertNumber type="number" />
+                    </h:outputText>
+                </p:column>
 
-            <p:column headerText="Work Time, mcs">
-                <h:outputText value="#{element.workTime}" >
-                    <f:convertNumber type="number" />
-                </h:outputText>
-            </p:column>
+                <p:column headerText="Y">
+                    <h:outputText value="#{element.point.y}" >
+                        <f:convertNumber type="number" />
+                    </h:outputText>
+                </p:column>
 
-        </p:dataTable>
+                <p:column headerText="R">
+                    <h:outputText value="#{element.point.r}" >
+                        <f:convertNumber type="number" />
+                    </h:outputText>
+                </p:column>
 
-    </h:form>
-    <p>
-        image <!-- TODO: interactive image -->
-    </p>
-    <h:link value="Index" outcome="goToIndex" id="go-to-index-button"/>
-</h:body>
+                <p:column headerText="Hit">
+                    <h:outputText value="#{element.result}" >
+
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="Start">
+                    <h:outputText value="#{element.start}" >
+
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="Work Time, mcs">
+                    <h:outputText value="#{element.workTime}" >
+                        <f:convertNumber type="number" />
+                    </h:outputText>
+                </p:column>
+
+            </p:dataTable>
+
+        </h:form>
+
+        <svg id="graph" xmlns="http://www.w3.org/2000/svg"
+             width="500"
+             height="500">
+
+            <line class="axis" x1="0" y1="250" x2="500" y2="250" />
+            <line class="axis" x1="250" y1="0" x2="250" y2="500" />
+
+            <line class="axis" x1="450" y1="248" x2="450" y2="252" /> <line class="axis" x1="350" y1="248" x2="350" y2="252" /> <line class="axis" x1="150" y1="248" x2="150" y2="252" /> <line class="axis" x1="50" y1="248" x2="50" y2="252" /> <line class="axis" x1="248" y1="50" x2="252" y2="50" />    <line class="axis" x1="248" y1="150" x2="252" y2="150" />  <line class="axis" x1="248" y1="350" x2="252" y2="350" />  <line class="axis" x1="248" y1="450" x2="252" y2="450" />  <text x="445" y="240">R</text>
+            <text x="340" y="240">R/2</text>
+            <text x="135" y="240">-R/2</text>
+            <text x="40" y="240">-R</text>
+            <text x="256" y="55">R</text>
+            <text x="256" y="155">R/2</text>
+            <text x="256" y="355">-R/2</text>
+            <text x="256" y="455">-R</text>
+
+            <polygon class="axis" points="500,250 495,255 495, 245" />
+            <polygon class="axis" points="250,0 245,5 255,5" />
+
+            <polygon class="figure" points="250,250 450,250 250,350" />
+
+            <rect class="figure" x="250" y="50" width="100" height="200" />
+
+            <path class="figure" d="M 250 250 L 250 350 A 100 100 0 0 0 150 250 Z" />
+
+        </svg>
+
+        <br />
+        <footer>
+            <h:link value="Index" outcome="goToIndex" id="go-to-index-button"/>
+        </footer>
+    </h:body>
 </html>
