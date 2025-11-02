@@ -25,7 +25,7 @@
                     <f:convertNumber minFractionDigits = "2" />
                 </h:outputText>
                 <p:slider for="hiddenX" display="xDisplay" type="vertical" minValue="-2.0" maxValue="2.0" step="0.5"
-                          styleClass="slider"/>
+                          styleClass="slider" />
                 <h:inputHidden id="hiddenX" value="#{attempt.point.x}" />
             </h:panelGrid>
 
@@ -47,7 +47,7 @@
                 </h:outputText>
                 <p:slider for="hiddenR" display="rDisplay" type="vertical" minValue="-2.0" maxValue="5.0" step="0.1"
                           styleClass="slider" widgetVar="rSliderWidget"
-                          onSlide="drawGraph(PF('rSliderWidget').getValue());" />
+                          onSlide="drawGraph(event, ui);" />
                 <h:inputHidden id="hiddenR" value="#{attempt.point.r}" />
             </h:panelGrid>
 

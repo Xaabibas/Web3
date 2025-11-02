@@ -3,7 +3,8 @@ const centerX = 250;
 const centerY = 250;
 const gap = 40;
 
-function drawGraph(newR) {
+function drawGraph(event, ui) {
+    const newR = ui.value;
     const triangle = document.getElementById("triangle");
     const rectangle = document.getElementById("rectangle");
     const  circle = document.getElementById("circle");
@@ -41,5 +42,3 @@ function drawGraph(newR) {
        `M ${startX} ${startY} A ${R} ${R} 0 0 ${sweepFlag} ${endX} ${endY} L ${centerX} ${centerY} Z`
     );
 }
-
-drawGraph(5);
