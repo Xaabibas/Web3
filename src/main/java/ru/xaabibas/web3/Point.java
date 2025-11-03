@@ -1,13 +1,10 @@
 package ru.xaabibas.web3;
 
-import jakarta.inject.Named;
-import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
 
-@Named
 @Setter
 @ToString
 public class Point implements Serializable {

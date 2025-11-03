@@ -1,8 +1,6 @@
 package ru.xaabibas.web3;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,12 +12,12 @@ import java.io.Serializable;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-@Named("attempt")
+//@Named("attempt")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-@RequestScoped
+//@RequestScoped
 public class Attempt implements Serializable {
     @JsonIgnore
     private Checker checker = new Checker();

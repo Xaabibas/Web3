@@ -2,17 +2,13 @@ package ru.xaabibas.web3;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.faces.context.FacesContext;
-import jakarta.inject.Named;
+import javax.faces.context.FacesContext;
 import lombok.Getter;
 import org.primefaces.PrimeFaces;
 
 import java.util.LinkedList;
 import java.util.List;
 
-@Named("keeper")
-@ApplicationScoped
 @Getter
 public class AttemptKeeper {
     private ObjectMapper mapper = new ObjectMapper();

@@ -1,8 +1,31 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<faces-config version="3.0" xmlns="https://jakarta.ee/xml/ns/jakartaee"
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
-                                  https://jakarta.ee/xml/ns/jakartaee/web-facesconfig_3_0.xsd">
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                                  http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_3.xsd"
+              version="2.3">
+<!--    <managed-bean>-->
+<!--        <managed-bean-name>pointBean</managed-bean-name>-->
+<!--        <managed-bean-class>ru.xaabibas.web3.Point</managed-bean-class>-->
+<!--        <managed-bean-scope>request</managed-bean-scope>-->
+<!--    </managed-bean>-->
+
+    <managed-bean>
+        <managed-bean-name>attempt</managed-bean-name>
+        <managed-bean-class>ru.xaabibas.web3.Attempt</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+<!--        <managed-property>-->
+<!--            <property-name>point</property-name>-->
+<!--            <value>#{pointBean}</value>-->
+<!--        </managed-property>-->
+    </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>keeper</managed-bean-name>
+        <managed-bean-class>ru.xaabibas.web3.AttemptKeeper</managed-bean-class>
+        <managed-bean-scope>application</managed-bean-scope>
+    </managed-bean>
+
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
