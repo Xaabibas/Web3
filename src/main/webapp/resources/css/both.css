@@ -37,3 +37,12 @@ footer a:focus {
     outline: 2px solid deepskyblue;
     background-color: rgba(0, 191, 255, 0.2);
 }
+
+body {
+    padding-bottom: 50px;
+}
+
+::selection {
+    color: #15ff00;
+    background-color: rgba(0, 200, 255, 0.55);
+}

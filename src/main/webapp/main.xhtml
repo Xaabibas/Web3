@@ -10,7 +10,7 @@
         <h:outputScript library="js" name="graph.js" target="body"/>
         <h:outputStylesheet name="slider.css" library="css" />
         <h:outputStylesheet name="graph.css" library="css" />
-        <h:outputStylesheet name="footer.css" library="css" />
+        <h:outputStylesheet name="both.css" library="css" />
     </h:head>
 
     <h:body>
@@ -160,7 +160,8 @@
                 </p:column>
 
                 <p:column headerText="Hit">
-                    <h:outputText value="#{element.result}" >
+                    <h:outputText value="#{element.result}"
+                            styleClass="#{element.result ? 'hit-text' : 'miss-text'}">
 
                     </h:outputText>
                 </p:column>
@@ -187,11 +188,11 @@
 
     <h:outputScript>
         document.addEventListener("DOMContentLoaded", function() {
-        drawAttempts(JSON.parse('#{keeper.init()}'));
+            drawAttempts(JSON.parse('#{keeper.initList()}'));
         });
     </h:outputScript>
     <p:remoteCommand name="addPoint" action="#{keeper.addFromJS}"
         update="table"/>
     <p:remoteCommand name="getR" action="#{attempt.getR}" />
-    <p:remoteCommand name="update" action="#{keeper.update}" />
+    <p:remoteCommand name="getLastAttempt" action="#{keeper.sendLastAttempt}" />
 </html>
