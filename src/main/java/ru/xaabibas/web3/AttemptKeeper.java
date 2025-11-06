@@ -2,25 +2,87 @@ package ru.xaabibas.web3;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import javax.annotation.Resource;
 import javax.faces.context.FacesContext;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
+
+import javax.transaction.UserTransaction;
 import lombok.Getter;
 import org.primefaces.PrimeFaces;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 
 @Getter
 public class AttemptKeeper {
-    private ObjectMapper mapper = new ObjectMapper();
+    @Resource
+    private UserTransaction userTransaction;
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    private final Checker checker = new Checker();
+    private final ObjectMapper mapper = new ObjectMapper();
     private List<Attempt> attempts = new LinkedList<>();
 
+    @Transactional
     public void add(Attempt attempt) {
-        attempt.submit();
-        attempts.add(attempt);
+        try {
+            userTransaction.begin();
+
+            processAttempt(attempt);
+            attempts.add(attempt);
+            entityManager.merge(attempt);
+
+            userTransaction.commit();
+        } catch (Exception e) {
+            try {
+                if (userTransaction.getStatus() == jakarta.transaction.Status.STATUS_ACTIVE ||
+                        userTransaction.getStatus() == jakarta.transaction.Status.STATUS_MARKED_ROLLBACK) {
+                    userTransaction.rollback();
+                }
+            } catch (Exception rollbackEx) {
+                rollbackEx.printStackTrace();
+            }
+            e.printStackTrace();
+        }
     }
 
+    @Transactional
     public void clear() {
-        attempts.clear();
+        try {
+            userTransaction.begin();
+
+            attempts.clear();
+            entityManager.createNativeQuery("TRUNCATE TABLE attempts").executeUpdate();
+
+            userTransaction.commit();
+        } catch (Exception e) {
+            try {
+                if (userTransaction.getStatus() == jakarta.transaction.Status.STATUS_ACTIVE ||
+                        userTransaction.getStatus() == jakarta.transaction.Status.STATUS_MARKED_ROLLBACK) {
+                    userTransaction.rollback();
+                }
+            } catch (Exception rollbackEx) {
+                rollbackEx.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+    }
+
+    public void processAttempt(Attempt attempt) {
+        long workStart = System.nanoTime();
+        LocalTime now = LocalTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        attempt.setStart(now.format(formatter));
+        attempt.setResult(checker.check(attempt));
+        long workEnd = System.nanoTime();
+        attempt.setWorkTime((workEnd - workStart) / 1_000);
     }
 
     public void addFromJS() {
@@ -35,15 +97,29 @@ public class AttemptKeeper {
         );
         Attempt attempt = new Attempt();
         attempt.setPoint(point);
-        attempt.submit();
-        attempts.add(attempt);
+
+        add(attempt);
 
         PrimeFaces.current().ajax().addCallbackParam("result", attempt.isResult());
     }
 
-    public String jsonToDraw() throws JsonProcessingException {
+    public String init() throws JsonProcessingException {
+        attempts = getAttemptsList();
         return mapper.writeValueAsString(
                 attempts
         );
+
+    }
+
+    public void update() {
+        Attempt attempt = attempts.get(attempts.size() - 1);
+        processAttempt(attempt);
+        PrimeFaces.current().ajax().addCallbackParam("x", attempt.getPoint().getX());
+        PrimeFaces.current().ajax().addCallbackParam("y", attempt.getPoint().getY());
+        PrimeFaces.current().ajax().addCallbackParam("result", attempt.isResult());
+    }
+
+    public List<Attempt> getAttemptsList() {
+        return entityManager.createQuery("SELECT a FROM Attempt a", Attempt.class).getResultList();
     }
 }

@@ -1,7 +1,8 @@
 package ru.xaabibas.web3;
 
 public class Checker {
-    public boolean check(Point point) {
+    public boolean check(Attempt attempt) {
+        Point point = attempt.getPoint();
         double x = point.getX();
         double y = point.getY();
         double r = point.getR();

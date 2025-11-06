@@ -1,12 +1,16 @@
 package ru.xaabibas.web3;
 
+import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 @Setter
+@Getter
 @ToString
+@Embeddable
 public class Point implements Serializable {
     private double x;
     private double y;
@@ -20,17 +24,5 @@ public class Point implements Serializable {
         this.x = x;
         this.y = y;
         this.r = r;
-    }
-
-    public double getX() {
-        return x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public double getR() {
-        return r;
     }
 }

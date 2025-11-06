@@ -72,7 +72,8 @@ svg.onclick = async function clickedPoint(e) {
     let correctY = (-(cursorPoint.y - 250) / gap).toFixed(2);
 
     const res = await getR();
-    currentR = res.jqXHR.pfArgs.r;
+    const currentR = res.jqXHR.pfArgs.r;
+    console.log(currentR);
 
     lastX = correctX;
     lastY = correctY;

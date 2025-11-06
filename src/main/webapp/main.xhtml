@@ -52,7 +52,7 @@
 
                     <p:commandButton value="Обновить" update="table @form"
                                      action="#{keeper.add(attempt)}"
-                                     onclick="drawDefaultPoint();" />
+                                     oncomplete="drawDefaultPoint();" />
 
                     <p:commandButton value="Очистить" update="table"
                                      action="#{keeper.clear()}"
@@ -187,11 +187,11 @@
 
     <h:outputScript>
         document.addEventListener("DOMContentLoaded", function() {
-        drawAttempts(JSON.parse('#{keeper.jsonToDraw()}'));
+        drawAttempts(JSON.parse('#{keeper.init()}'));
         });
     </h:outputScript>
     <p:remoteCommand name="addPoint" action="#{keeper.addFromJS}"
         update="table"/>
     <p:remoteCommand name="getR" action="#{attempt.getR}" />
-    <p:remoteCommand name="update" action="#{attempt.update}" />
+    <p:remoteCommand name="update" action="#{keeper.update}" />
 </html>

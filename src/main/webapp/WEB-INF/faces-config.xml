@@ -4,20 +4,11 @@
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
                                   http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_3.xsd"
               version="2.3">
-<!--    <managed-bean>-->
-<!--        <managed-bean-name>pointBean</managed-bean-name>-->
-<!--        <managed-bean-class>ru.xaabibas.web3.Point</managed-bean-class>-->
-<!--        <managed-bean-scope>request</managed-bean-scope>-->
-<!--    </managed-bean>-->
 
     <managed-bean>
         <managed-bean-name>attempt</managed-bean-name>
         <managed-bean-class>ru.xaabibas.web3.Attempt</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
-<!--        <managed-property>-->
-<!--            <property-name>point</property-name>-->
-<!--            <value>#{pointBean}</value>-->
-<!--        </managed-property>-->
     </managed-bean>
 
     <managed-bean>

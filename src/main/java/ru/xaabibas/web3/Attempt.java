@@ -8,60 +8,39 @@ import lombok.ToString;
 import org.primefaces.PrimeFaces;
 
 
+import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
-//@Named("attempt")
+@Entity
+@Table(name="attempts")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-//@RequestScoped
 public class Attempt implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @JsonIgnore
+    @Transient
     private Checker checker = new Checker();
+
+    @Embedded
     private Point point = new Point();
+
+    @Column(name="result", nullable = false)
     private boolean result;
+
     @JsonIgnore
+    @Column(name="start", nullable = false)
     private String start;
+
     @JsonIgnore
+    @Column(name="workTime", nullable = false)
     private long workTime;
-
-    public void submit() {
-        long workStart = System.nanoTime();
-        setCurrentStart();
-        check();
-        long workEnd = System.nanoTime();
-        workTime = (workEnd - workStart) / 1_000;
-    }
-
-    private void setCurrentStart() {
-        LocalTime now = LocalTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-        start = now.format(formatter);
-    }
-
-    private void check() {
-        result = checker.check(point);
-    }
-
-    public boolean isResult() {
-        return result;
-    }
-
-    public void setPoint(Point point) {
-        this.point = point;
-    }
 
     public void getR() {
         PrimeFaces.current().ajax().addCallbackParam("r", this.point.getR());
-    }
-
-    public void update() {
-        submit();
-        PrimeFaces.current().ajax().addCallbackParam("x", this.point.getX());
-        PrimeFaces.current().ajax().addCallbackParam("y", this.point.getY());
-        PrimeFaces.current().ajax().addCallbackParam("result", this.result);
     }
 }

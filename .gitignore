@@ -1,4 +1,7 @@
+src/main/resources/META-INF/persistence.xml
+
 target/
+create.sql
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
