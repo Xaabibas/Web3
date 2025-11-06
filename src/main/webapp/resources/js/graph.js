@@ -6,10 +6,14 @@ const gap = 40;
 
 function drawGraph(event, ui) {
     const newR = ui.value;
-    const triangle = document.getElementById("triangle");
-    const rectangle = document.getElementById("rectangle");
-    const  circle = document.getElementById("circle");
 
+    changeTriangle(newR);
+    changeRectangle(newR);
+    changeCircle(newR);
+}
+
+function changeTriangle(newR) {
+    const triangle = document.getElementById("triangle");
     const newTrianglePoints = [
         [centerX, centerY],
         [centerX, centerY + newR * gap],
@@ -19,6 +23,10 @@ function drawGraph(event, ui) {
         "points",
         newTrianglePoints.map(p => p.join(",")).join(" ")
     );
+}
+
+function changeRectangle(newR) {
+    const rectangle = document.getElementById("rectangle");
 
     const newRectanglePoints = [
         [centerX, centerY],
@@ -30,7 +38,10 @@ function drawGraph(event, ui) {
         "points",
         newRectanglePoints.map(p => p.join(",")).join(" ")
     );
+}
 
+function changeCircle(newR) {
+    const  circle = document.getElementById("circle");
     const startX = centerX + newR * gap;
     const startY = centerY;
     const endX = centerX;
@@ -43,6 +54,7 @@ function drawGraph(event, ui) {
        `M ${startX} ${startY} A ${R} ${R} 0 0 ${sweepFlag} ${endX} ${endY} L ${centerX} ${centerY} Z`
     );
 }
+
 
 function drawPoint(x, y, result) {
     const point = document.createElementNS("http://www.w3.org/2000/svg", "circle");
@@ -59,24 +71,8 @@ function drawPoint(x, y, result) {
     svg.appendChild(point);
 }
 
-let lastX = 0;
-let lastY = 0;
-
 svg.onclick = async function clickedPoint(e) {
-    pt.x = e.clientX;
-    pt.y = e.clientY;
-
-    let cursorPoint = pt.matrixTransform(svg.getScreenCTM().inverse());
-
-    let correctX = ((cursorPoint.x - 250) / gap).toFixed(2);
-    let correctY = (-(cursorPoint.y - 250) / gap).toFixed(2);
-
-    const res = await getR();
-    const currentR = res.jqXHR.pfArgs.r;
-    console.log(currentR);
-
-    lastX = correctX;
-    lastY = correctY;
+    const [correctX, correctY, currentR] = await calculateCorrectCoordinates(e);
 
     const response = await addPoint([
         {name: "x", value: correctX},
@@ -85,7 +81,31 @@ svg.onclick = async function clickedPoint(e) {
     ]);
 
     const result = response.jqXHR.pfArgs.result;
-    drawPoint(lastX, lastY, result);
+    drawPoint(correctX, correctY, result);
+}
+
+async function calculateCorrectCoordinates(e) {
+    pt.x = e.clientX;
+    pt.y = e.clientY;
+
+    let cursorPoint = pt.matrixTransform(svg.getScreenCTM().inverse());
+
+    let correctX = ((cursorPoint.x - centerX) / gap).toFixed(2);
+    let correctY = (-(cursorPoint.y - centerY) / gap).toFixed(2);
+
+    const res = await getR();
+    const currentR = res.jqXHR.pfArgs.r;
+
+    return [correctX, correctY, currentR];
+}
+
+async function drawButtonPoint() {
+    const response = await getLastAttempt();
+    const x = response.jqXHR.pfArgs.x;
+    const y = response.jqXHR.pfArgs.y;
+
+    const result = response.jqXHR.pfArgs.result;
+    drawPoint(x, y, result);
 }
 
 function drawAttempts(attempts) {
@@ -96,15 +116,6 @@ function drawAttempts(attempts) {
 
         drawPoint(x, y, result);
     }
-}
-
-async function drawDefaultPoint() {
-    const response = await update();
-    const x = response.jqXHR.pfArgs.x;
-    const y = response.jqXHR.pfArgs.y;
-    const result = response.jqXHR.pfArgs.result;
-    console.log(x, y, result);
-    drawPoint(x, y, result);
 }
 
 window.drawAttempts = drawAttempts;

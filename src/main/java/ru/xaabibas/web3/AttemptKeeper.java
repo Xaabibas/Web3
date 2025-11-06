@@ -2,23 +2,18 @@ package ru.xaabibas.web3;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.transaction.Transactional;
+import org.primefaces.PrimeFaces;
 
 import javax.annotation.Resource;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
-
 import javax.transaction.UserTransaction;
-import lombok.Getter;
-import org.primefaces.PrimeFaces;
-
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.LinkedList;
 import java.util.List;
 
-@Getter
 public class AttemptKeeper {
     @Resource
     private UserTransaction userTransaction;
@@ -28,7 +23,7 @@ public class AttemptKeeper {
 
     private final Checker checker = new Checker();
     private final ObjectMapper mapper = new ObjectMapper();
-    private List<Attempt> attempts = new LinkedList<>();
+    private List<Attempt> attempts;
 
     @Transactional
     public void add(Attempt attempt) {
@@ -36,8 +31,8 @@ public class AttemptKeeper {
             userTransaction.begin();
 
             processAttempt(attempt);
-            attempts.add(attempt);
             entityManager.merge(attempt);
+            attempts.add(attempt);
 
             userTransaction.commit();
         } catch (Exception e) {
@@ -58,8 +53,8 @@ public class AttemptKeeper {
         try {
             userTransaction.begin();
 
-            attempts.clear();
             entityManager.createNativeQuery("TRUNCATE TABLE attempts").executeUpdate();
+            attempts.clear();
 
             userTransaction.commit();
         } catch (Exception e) {
@@ -103,23 +98,28 @@ public class AttemptKeeper {
         PrimeFaces.current().ajax().addCallbackParam("result", attempt.isResult());
     }
 
-    public String init() throws JsonProcessingException {
-        attempts = getAttemptsList();
+    public String initList() throws JsonProcessingException {
+        attempts = selectAttemptsList();
         return mapper.writeValueAsString(
                 attempts
         );
-
     }
 
-    public void update() {
+    public void sendLastAttempt() {
         Attempt attempt = attempts.get(attempts.size() - 1);
-        processAttempt(attempt);
         PrimeFaces.current().ajax().addCallbackParam("x", attempt.getPoint().getX());
         PrimeFaces.current().ajax().addCallbackParam("y", attempt.getPoint().getY());
         PrimeFaces.current().ajax().addCallbackParam("result", attempt.isResult());
     }
 
-    public List<Attempt> getAttemptsList() {
+    public List<Attempt> selectAttemptsList() {
         return entityManager.createQuery("SELECT a FROM Attempt a", Attempt.class).getResultList();
+    }
+
+    public List<Attempt> getAttempts() {
+        if (attempts == null) {
+            attempts = selectAttemptsList();
+        }
+        return attempts;
     }
 }
