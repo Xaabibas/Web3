@@ -103,6 +103,7 @@ async function drawButtonPoint() {
     const response = await getLastAttempt();
     const x = response.jqXHR.pfArgs.x;
     const y = response.jqXHR.pfArgs.y;
+    console.log(x, y);
 
     const result = response.jqXHR.pfArgs.result;
     drawPoint(x, y, result);
@@ -118,4 +119,24 @@ function drawAttempts(attempts) {
     }
 }
 
+function dotToComma(event) {
+    if (event.key === '.' || event.key === 'Decimal') {
+       event.preventDefault();
+
+       var input = event.target;
+       var val = input.value;
+       var start = input.selectionStart;
+       var end = input.selectionEnd;
+
+       input.value = val.substring(0, start) + ',' + val.substring(end);
+
+       input.selectionStart = input.selectionEnd = start + 1;
+
+       if (typeof input.dispatchEvent === 'function') {
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+       }
+   }
+}
+
 window.drawAttempts = drawAttempts;
+window.dotToComma = dotToComma;

@@ -33,7 +33,10 @@
                         <p:inputNumber value="#{attempt.point.y}"
                                        required="true"
                                        requiredMessage="Не введено значение поля Y"
-                                       validatorMessage="Y должен быть числом от -5 до 5" >
+                                       validatorMessage="Y должен быть числом от -5 до 5"
+                                       decimalPlaces="15"
+                                       locale="ru"
+                                       onkeydown="dotToComma(event)" >
                             <f:validateDoubleRange minimum="-5" maximum="5" />
                         </p:inputNumber>
                     </h:panelGrid>

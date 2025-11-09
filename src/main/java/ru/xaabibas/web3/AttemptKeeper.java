@@ -31,8 +31,8 @@ public class AttemptKeeper {
             userTransaction.begin();
 
             processAttempt(attempt);
-            entityManager.merge(attempt);
-            attempts.add(attempt);
+            entityManager.persist(attempt);
+            attempts.add(0, attempt);
 
             userTransaction.commit();
         } catch (Exception e) {
@@ -106,7 +106,7 @@ public class AttemptKeeper {
     }
 
     public void sendLastAttempt() {
-        Attempt attempt = attempts.get(attempts.size() - 1);
+        Attempt attempt = attempts.get(0);
         PrimeFaces.current().ajax().addCallbackParam("x", attempt.getPoint().getX());
         PrimeFaces.current().ajax().addCallbackParam("y", attempt.getPoint().getY());
         PrimeFaces.current().ajax().addCallbackParam("result", attempt.isResult());
